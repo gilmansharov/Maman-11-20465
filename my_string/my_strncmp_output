@@ -1,0 +1,8 @@
+Hello, Please type a number from 1 to 3, in order to call one of the functions:
+my_strcmp: type 1
+my_strncmp: type 2
+my_strchr: type 3
+Please type the parameters you want to use with strncmp:
+Function called: my_strncmp
+Parameters are: Direct, Directory, 6
+The function returned: 0
