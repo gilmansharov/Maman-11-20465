@@ -1,59 +1,74 @@
+/*
+Author: Gil Mansharov
+ID: 313260192
+
+File Name: letters.c
+*/
+
 #include <stdio.h>
 #include <ctype.h>
+
 
 int main()
 {
     int c;
-    enum status {SENTENCE_BEGIN, BETWEEN_QUETATION_MARKS, INSIDE_SENTENCE};
+    enum status {
+        SENTENCE_BEGIN, /*Indicates on the beginning of a sentence*/
+        BETWEEN_QUOTATION_MARKS, /*Indicates that the input is inside quotation marks*/
+        INSIDE_SENTENCE /*Indicates on a middle of a sentence*/
+    };
     int STATE = SENTENCE_BEGIN;
     while ((c = getchar()) != EOF)
     {
-        if (c < '0' || c > '9')
+        if (!isdigit(c)) /*digits should not be written to the standard output*/
         {
-            switch(STATE)
+            switch(STATE) /*each state has a specific conditions to output*/
             {
                 case SENTENCE_BEGIN:
                     {
-                        if (!isspace(c))
+                        if (!isspace(c)) /*whitespaces should not be written to the
+                        standard output in the sentence beginning*/
                         {
-                            
-                            if (islower(c))
+                            if (islower(c)) /*a Sentence should begin with a capital letter*/
                             {
                                 c = toupper(c);
                             }
                             putchar(c);
                             
-                            if (c == '.')
+                            if (c == '.') /*Indicates on the end of the sentence*/
                             {
                                 putchar('\n');
                                 putchar('\n');
                             }
-                            else if (c == '\"')
-                                STATE = BETWEEN_QUETATION_MARKS;
-                            else
+                            else if (c == '\"') /*Check if a quotation has began*/
+                                STATE = BETWEEN_QUOTATION_MARKS;
+                            else 
                                 STATE = INSIDE_SENTENCE;
                         }
                     }
                     break;
-                case BETWEEN_QUETATION_MARKS:
+                case BETWEEN_QUOTATION_MARKS:
                     {
-                        if (islower(c))
+                        if (islower(c)) /*quotation should be outputted as capital letters*/
                             c = toupper(c);
                         putchar(c);
-                        if (c == '\"')
+                        if (c == '\"') /*Indicates on the end of the quotation*/
                             STATE = INSIDE_SENTENCE;
                     }
                     break;
                 case INSIDE_SENTENCE:
                     {
-                        
-                        if (isupper(c))
+                        /*Capital letters should not be outputted
+                        as capital if not in the beginning of the sentence or inside quotation marks*/
+                        if (isupper(c)) 
                             c = tolower(c);
-                        putchar(c);
-                        if (c == '\"')
-                            STATE = BETWEEN_QUETATION_MARKS;
                         
-                        if (c == '.')
+                        putchar(c);
+
+                        if (c == '\"')
+                            STATE = BETWEEN_QUOTATION_MARKS;
+                        
+                        if (c == '.') /*Indicates on the end of the sentence*/
                         {
                             STATE = SENTENCE_BEGIN;
                             putchar('\n');
