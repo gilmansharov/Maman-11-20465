@@ -1,6 +1,5 @@
 /*
 Author: Gil Mansharov
-ID: 313260192
 
 File Name: my_string.c
 */
